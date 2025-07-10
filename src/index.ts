@@ -1,6 +1,17 @@
 import express from "express";
 import { config } from "dotenv";
 import cors from "cors";
+import { CreateOrderRequest, Order as OrderInfo } from "./types/type";
+import { connect } from "./config/db/mongodb";
+interface Order {
+  id: number;
+  zaloUserId: string;
+  checkoutSdkOrderId?: number;
+  info: OrderInfo;
+}
+interface Schema {
+  orders: Order[];
+}
 
 config();
 const port = process.env.PORT || 3000;
@@ -16,3 +27,5 @@ express()
   .listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
   });
+
+connect();

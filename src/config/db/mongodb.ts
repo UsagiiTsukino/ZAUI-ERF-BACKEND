@@ -1,7 +1,10 @@
 import mongoose from "mongoose";
+import { config } from "dotenv";
+
 async function connect() {
+  config();
   try {
-    await mongoose.connect("mongodb://localhost:27017/ZaloERF_DB");
+    await mongoose.connect(process.env.MONG0DB_URI || "");
     console.log("Connect Successfully");
   } catch (error) {
     console.log("Connect Fallure");

@@ -12,7 +12,7 @@ export const DeliverySchema = new Schema(
     // Pickup fields
     stationId: Number,
   },
-  { _id: false }
+  { _id: false, timestamps: true }
 );
 
 export default mongoose.model("Delivery", DeliverySchema);

@@ -53,10 +53,13 @@ const OrderInfoSchema = new Schema({
   },
 });
 
-const OrderSchema = new Schema<IOrder>({
-  zaloUserId: { type: String, required: true },
-  checkoutSdkOrderId: Number,
-  info: { type: OrderInfoSchema, required: true },
-});
+const OrderSchema = new Schema<IOrder>(
+  {
+    zaloUserId: { type: String, required: true },
+    checkoutSdkOrderId: Number,
+    info: { type: OrderInfoSchema, required: true },
+  },
+  { timestamps: true }
+);
 
 export default mongoose.model<IOrder>("Order", OrderSchema);

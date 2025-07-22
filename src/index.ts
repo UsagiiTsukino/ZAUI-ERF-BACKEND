@@ -19,15 +19,14 @@ import { Request, Response } from "express";
 //   cert: fs.readFileSync("cert.pem"),
 // };
 
-function checkHttps(req, res, next) {
-  // protocol check, if http, redirect to https
-
-  if (req.get("X-Forwarded-Proto").indexOf("https") != -1) {
-    return next();
-  } else {
-    res.redirect("https://" + req.hostname + req.url);
-  }
-}
+// function checkHttps(req, res, next) {
+//   if (req.get("X-Forwarded-Proto")?.indexOf("https") !== -1) {
+//     return next();
+//   } else {
+//     const fullUrl = "https://" + req.headers.host + req.originalUrl;
+//     res.redirect(fullUrl);
+//   }
+// }
 
 interface OrderDoc {
   id: number;
@@ -290,7 +289,7 @@ app.post("/callback", async (req, res) => {
   }
 });
 
-app.all("*", checkHttps);
+// app.all("*", checkHttps);
 // https.createServer(options, app).listen(port, () => {
 //   console.log(`Example app listening on port ${port}`);
 // });

@@ -44,7 +44,7 @@ const port = process.env.PORT || 3000;
 const app = express();
 app.use(express.json());
 app.use(cors({ origin: ["https://h5.zdn.vn", "http://localhost:3000"] }));
-app.use(enforce.HTTPS({ trustProtoHeader: true }));
+// app.use(enforce.HTTPS({ trustProtoHeader: true }));
 
 app.get("/", async (req, res) => {
   res.json({
@@ -293,5 +293,7 @@ app.post("/callback", async (req, res) => {
 // https.createServer(options, app).listen(port, () => {
 //   console.log(`Example app listening on port ${port}`);
 // });
-
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`);
+});
 connect();

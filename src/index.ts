@@ -14,10 +14,21 @@ import { createHmac } from "crypto";
 import axios from "axios";
 import { Request, Response } from "express";
 
-const options = {
-  key: fs.readFileSync("key.pem"),
-  cert: fs.readFileSync("cert.pem"),
-};
+// const options = {
+//   key: fs.readFileSync("key.pem"),
+//   cert: fs.readFileSync("cert.pem"),
+// };
+
+function checkHttps(req, res, next) {
+  // protocol check, if http, redirect to https
+
+  if (req.get("X-Forwarded-Proto").indexOf("https") != -1) {
+    return next();
+  } else {
+    res.redirect("https://" + req.hostname + req.url);
+  }
+}
+
 interface OrderDoc {
   id: number;
   zaloUserId: string;
@@ -278,7 +289,10 @@ app.post("/callback", async (req, res) => {
     });
   }
 });
-https.createServer(options, app).listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
+
+app.all("*", checkHttps);
+// https.createServer(options, app).listen(port, () => {
+//   console.log(`Example app listening on port ${port}`);
+// });
+
 connect();

@@ -43,7 +43,23 @@ const port = process.env.PORT || 3000;
 
 const app = express();
 app.use(express.json());
-app.use(cors({ origin: ["https://h5.zdn.vn", "http://localhost:3000"] }));
+
+// CORS configuration
+const corsOptions = {
+  origin: [
+    "https://h5.zdn.vn", // Zalo Mini Program
+    "http://localhost:3000", // Development
+    "http://localhost:5173", // Vite dev server
+    "http://localhost:2999",
+    "*", // Frontend dev server// Frontend URL from environment
+  ].filter(Boolean), // Remove undefined values
+  credentials: true,
+  optionsSuccessStatus: 200,
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+
+app.use(cors(corsOptions));
 // app.use(enforce.HTTPS({ trustProtoHeader: true }));
 
 app.get("/", async (req, res) => {
